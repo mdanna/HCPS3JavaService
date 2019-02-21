@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.8"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="lib" path="/Applications/KonyFabric_8.3.1.0_GA/tomcat/webapps/services/WEB-INF/lib/log4j-1.2-api-2.8.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/KonyFabric_8.3.1.0_GA/tomcat/webapps/services/WEB-INF/lib/log4j-core-2.8.2.jar"/>
+	<classpathentry kind="lib" path="/Applications/KonyFabric_8.3.1.0_GA/tomcat/webapps/services/WEB-INF/lib/middleware-8.3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/KonyFabric_8.3.1.0_GA/tomcat/webapps/services/WEB-INF/lib/middleware-api-8.3.1.0.jar"/>
+	<classpathentry kind="lib" path="/Applications/KonyFabric_8.3.1.0_GA/tomcat/webapps/services/WEB-INF/lib/commons-lang3-3.6.jar"/>
+	<classpathentry kind="lib" path="/Users/mario/Downloads/servlet-api-2.5.jar"/>
+	<classpathentry kind="lib" path="/Users/mario/Downloads/docusign/json-20140107.jar"/>
+	<classpathentry kind="lib" path="/Users/mario/Downloads/httpclient-4.5.5.jar"/>
+	<classpathentry kind="lib" path="/Users/mario/Downloads/httpcore-4.4.9.jar"/>
+	<classpathentry kind="lib" path="/Users/mario/Downloads/aws-java-sdk-1.11.493/lib/aws-java-sdk-1.11.493.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

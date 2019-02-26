@@ -55,6 +55,11 @@ public class S3JavaService implements JavaService2 {
 				String output = HTTPOperations.hitPOSTServiceAndGetResponse(URL, postParams, 
 						konyFabricAuthToken, requestHeaders, new Base64ResponseHandler());
 				byte[] content = Base64.getDecoder().decode(output.getBytes());
+				String szContent = new String(content);
+				if(szContent != null && szContent.contains("errorCode")) {
+					result.addParam(new Param("docusignOutput", szContent));
+					throw new IllegalStateException("Docusign error");
+				}
 
 				AmazonS3 s3 = S3Utils.getS3Client(region, accessKey, secretKey);
 				String url = S3Utils.uploadFile(s3, filename, content, bucketName);

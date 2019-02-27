@@ -27,18 +27,19 @@ public class S3JavaService implements JavaService2 {
 			ServicesManager sm = request.getServicesManager();
 			ConfigurableParametersHelper paramHelper = sm.getConfigurableParametersHelper();
 		
+			String region = paramHelper.getServerProperty("HCP_S3_REGION");
+			String accessKey = paramHelper.getServerProperty("HCP_S3_ACCESS_KEY");
+			String secretKey = paramHelper.getServerProperty("HCP_S3_SECRET_KEY");
+			String bucketName = paramHelper.getServerProperty("HCP_S3_BUCKET");
+			String accountId = paramHelper.getServerProperty("HCP_DOCUSIGN_ACCOUNT_ID");
+			String authorization = paramHelper.getServerProperty("HCP_DOCUSIGN_TOKEN");
+			String baseUrl = paramHelper.getServerProperty("HCP_BASE_URL");
+			
+			AmazonS3 s3 = S3Utils.getS3Client(region, accessKey, secretKey);
+
 			if(operationName.equals("getDocFromDocusignAndUploadToS3")) {
 				String envelopeId = request.getParameter("envelopeId");
 				String documentId = request.getParameter("documentId");
-				
-				String region = paramHelper.getServerProperty("HCP_S3_REGION");
-				String accessKey = paramHelper.getServerProperty("HCP_S3_ACCESS_KEY");
-				String secretKey = paramHelper.getServerProperty("HCP_S3_SECRET_KEY");
-				String bucketName = paramHelper.getServerProperty("HCP_S3_BUCKET");
-				String accountId = paramHelper.getServerProperty("HCP_DOCUSIGN_ACCOUNT_ID");
-				String authorization = paramHelper.getServerProperty("HCP_DOCUSIGN_TOKEN");
-				String baseUrl = paramHelper.getServerProperty("HCP_BASE_URL");
-				
 			    String filename = envelopeId + "-" + documentId;
 				
 				String URL = baseUrl + "/services/DocuSignAPIs/getEnvelopeDocument";
@@ -61,12 +62,17 @@ public class S3JavaService implements JavaService2 {
 					throw new IllegalStateException("Docusign error");
 				}
 
-				AmazonS3 s3 = S3Utils.getS3Client(region, accessKey, secretKey);
-				String url = S3Utils.uploadFile(s3, filename, content, bucketName);
+				String url = S3Utils.uploadFile(s3, filename, "pdf", content, bucketName);
 				
 				result.addParam(new Param("documentUrl", url, "string"));
 			
+			} else if(operationName.equals("deleteDocFromS3")) {
+				String envelopeId = request.getParameter("envelopeId");
+				String documentId = request.getParameter("documentId");
+			    String key = envelopeId + "-" + documentId + ".pdf";
+	            s3.deleteObject(bucketName, key);
 			}
+			
 			result.addParam(new Param("debug", "success", "string"));
 			result.addParam(new Param("opstatus","0","string"));
 

@@ -30,8 +30,8 @@ public class S3Utils {
         return s3;
 	}
 	
-	public static String uploadFile(AmazonS3 s3, String filename, byte[] content, String bucketName) throws IOException {
-		File tempFile = File.createTempFile(filename, "pdf");
+	public static String uploadFile(AmazonS3 s3, String filename, String extension, byte[] content, String bucketName) throws IOException {
+		File tempFile = File.createTempFile(filename, extension);
 		tempFile.deleteOnExit();
 		OutputStream stream = new FileOutputStream(tempFile);
 		try {
@@ -40,7 +40,7 @@ public class S3Utils {
 			stream.close();
 		}
 		
-		String key = filename + ".pdf";
+		String key = filename + "." + extension;
 
 		s3.putObject(new PutObjectRequest(bucketName, key, tempFile));
 		
